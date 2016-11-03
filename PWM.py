@@ -1,3 +1,5 @@
+# Jacob is a butt
+
 import wiringpi # Requires "pip install wiringpi"
 
 def setuppwm():
