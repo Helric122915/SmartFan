@@ -1,11 +1,12 @@
 import atexit
 import signal
 import PWM
-import ScheduleOperation
-import ManualOperation
-import OneSourceTemperatureOperation
-import TwoSourceTemperatureOperation
+#import ScheduleOperation
+#import ManualOperation
+#import OneSourceTemperatureOperation
+#import TwoSourceTemperatureOperation
 import Settings
+import AccessWebServer
 import time
 
 def exit_handler():
@@ -27,13 +28,26 @@ currentPWM = -1
     # Access DB or web server to find value
     # If none exists use default mode (manual?)
   
-Settings.ReadSettings(Settings.OperationMode.Manual)
+#Settings.ReadSettings(Settings.OperationMode.Manual)
 
-while current PWM < 2024:
-    PWM.setpwm(currentPWM)
-    currentPWM = currentPWM + 1;
+#fanData = AccessWebServer.GetCurrentFanData()
+
+#fanData.roomTemp = 75
+#fanData.fanSpeed = 3700
+
+#AccessWebServer.PostUpdateFanData(fanData)
+
+while True:
+  fanData = AccessWebServer.GetCurrentFanData()
   
-    time.sleep(.01)
+  print "Setting PWM to: " + str(fanData.fanSpeed)
+  PWM.setpwm(fanData.fanSpeed)
+
+  time.sleep(1)
+     
+#    currentPWM = currentPWM + 1;
+  
+#    time.sleep(.01)
   
     # Call specific function for operation mode
         # CurrentPWM = Temp Mode 1 (CurrentPWM) Returns new PWM value
