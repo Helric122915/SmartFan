@@ -1,4 +1,4 @@
-import wiringpi # Requires "pip install wiringpi"
+import wiringpi # Requires installing from the WiringPi/WiringPi-Python wrapper class
 
 def setuppwm():
     wiringpi.wiringPiSetup()
