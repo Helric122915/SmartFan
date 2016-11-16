@@ -24,6 +24,8 @@ def LatLng(address):
     lat =  json_weather['results'][0]['geometry']['bounds']['northeast']['lat']
     lng = json_weather['results'][0]['geometry']['bounds']['northeast']['lng']
     
+    # Fix these two JSON object access methods because Google appears to randomly change the structure
+    
     return ReturnValue(lat, lng)
 
 
