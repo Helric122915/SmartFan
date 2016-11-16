@@ -12,16 +12,6 @@ def GetCurrentFanData():
 
   return fanData
 
-#print "Print Original Web Server Info"
-#print r.text
-#print json_test
-#print json_test['Class']['Room_Temp']
-#print json_test['Class']['Fan_Speed']
-#print fanData.roomTemp
-#print fanData.fanSpeed
-
-#fanData = FanClass.FanData(3600, 73)
-
 def PostUpdateFanData(fanData):
   data = {}
   data["Room_Temp"] = fanData.roomTemp
