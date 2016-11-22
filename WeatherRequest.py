@@ -26,6 +26,7 @@ def Current(lat = 41.07472, lng = -81.52201):
     print "Error:", r.status_code
   else:
     json_weather = r.json()
+    print json_weather
     return json_weather
 
 def CurrentTemp(lat = 41.07472, long = -81.52201):
