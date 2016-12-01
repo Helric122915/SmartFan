@@ -1,5 +1,5 @@
 class FanData(object):
-
+# testing Visual Studio
   def __init__(self,fanSpeed,roomTemp):
     # General Variables
     self.roomTemp = roomTemp
