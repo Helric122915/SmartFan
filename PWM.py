@@ -16,8 +16,9 @@ def setpwm(pwm):
     if pwm == -1:
         wiringpi.pinMode(PIN_TO_PWM, TURN_OFF)
         result = True
-  
-    elif pwm >= 0 and pwm <= 47:
+
+    # The PWM value can be between 0 and 48 ranging from 0 to ~3.3 volts  
+    elif pwm >= 0 and pwm <= 49:
         wiringpi.pinMode(PIN_TO_PWM, OUTPUT)
         configurepwm()
         wiringpi.pwmWrite(PIN_TO_PWM, pwm)
