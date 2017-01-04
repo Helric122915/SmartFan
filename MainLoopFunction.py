@@ -1,15 +1,14 @@
 import atexit
 import signal
-import PWM
-import FanClass
-#import ScheduleOperation
-import ManualOperation
-#import OneSourceTemperatureOperation
-#import TwoSourceTemperatureOperation
-import Settings
-import AccessWebServer
 import time
 import RPi.GPIO as GPIO
+import PWM
+import FanClass
+import AccessWebServer
+import ManualOperation
+#import ScheduleOperation
+#import OneTempOperation
+#import TwoTempOperation
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -57,15 +56,3 @@ while True:
     PWM.setpwm(-1)
 
   time.sleep(1)
-     
-#    currentPWM = currentPWM + 1;
-  
-#    time.sleep(.01)
-  
-    # Call specific function for operation mode
-        # CurrentPWM = Temp Mode 1 (CurrentPWM) Returns new PWM value
-        # CurrentPWM = Temp Mode 2 (CurrentPWM) Returns new PWM value
-        # CurrentPWM = Schedule Mode (CurrentPWM) Returns new PWM value
-        # CurrentPWM = Manual Mode (CurrentPWM) Returns new PWM value
-  
-    # Access current operation mode from DB or web server
