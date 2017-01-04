@@ -2,21 +2,30 @@ import requests
 import json
 import FanClass
 
-url = 'http://130.101.94.161'
+PORTNUM = '3000'
+url = 'http://130.101.94.161:' + PORTNUM
 
-def GetCurrentFanData():
-  r = requests.get(url + '/CurrentFanData')
+def GetOp():
+  r = requests.get(url + '/GetOp')
 
-  json_test = json.loads(r.text)
-  fanData = FanClass.FanData(int(json_test['Class']['Fan_Speed']),int(json_test['Class']['Room_Temp']))
+  data = json.loads(r.text)
+  opMode = data['data']
 
-  return fanData
+  return opMode
 
-def PostUpdateFanData(fanData):
+def GetManual():
+  r = requests.get(url + '/GetManual')
+
+  data = json.loads(r.text)
+  manualData = FanClass.ManualData(data['data']['Manual_Direction'],int(data['data']['Manual_Fan_Speed']))
+
+  return manualData
+
+def PostManual(manualData):
   data = {}
-  data["Room_Temp"] = fanData.roomTemp
-  data["Fan_Speed"] = fanData.fanSpeed
+  data["Manual_Direction"] = manualData.direction
+  data["Manual_Fan_Speed"] = manualData.pwm
   json_data = json.dumps(data)
 
-  r = requests.post(url + '/UpdateFanData', data)
+  r = requests.post(url + '/PostManual', data)
   print r.text
