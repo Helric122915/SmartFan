@@ -25,7 +25,46 @@ def PostManual(manualData):
   data = {}
   data["Manual_Direction"] = manualData.direction
   data["Manual_Fan_Speed"] = manualData.pwm
-  json_data = json.dumps(data)
+  #json_data = json.dumps(data)
 
   r = requests.post(url + '/PostManual', data)
+  print r.text
+
+def GetOneTemp():
+  r = requests.get(url + '/GetOneTemp')
+
+  data = json.loads(r.text)
+  oneTempData = FanClass.OneTempData(data['data']['One_Temp_Direction'],int(data['data']['One_Temp_Low_Speed'),int(data['data']['One_Temp_Low_Temp']),int(data['data']['One_Temp_High_Speed']),int(data['data']['One_Temp_High_Temp']))
+
+  return oneTempData
+
+def PostOneTemp(oneTempData):
+  data = {}
+  data["One_Temp_Direction"] = oneTempData.direction
+  data["One_Temp_Low_Speed"] = oneTempData.lowSpeed
+  data["One_Temp_Low_Temp"] = oneTempData.lowTemp
+  data["One_Temp_High_Speed"] = oneTempData.highSpeed
+  data["One_Temp_High_Temp"] = oneTempData.highTemp
+  #json_data = json.dumps(data)
+
+  r = requests.post(url + '/PostOneTemp', data)
+  print r.text
+
+def GetTwoTemp():
+  r = requests.get(url + '/GetTwoTemp')
+
+  data = json.loads(r.text)
+  twoTempData = FanClass.TwoTempData(int(data['data']['Two_Temp_Low_Speed']),int(data['data']['Two_Temp_Low_Temp']),int(data['data']['Two_Temp_High_Speed']),int(data['data']['Two_Temp_High_Temp']))
+
+  return twoTempData
+
+def PostTwoTemp(twoTempData):
+  data = {}
+  data["Two_Temp_Low_Speed"] = twoTempData.lowSpeed
+  data["Two_Temp_Low_Temp"] = twoTempData.lowTemp
+  data["Two_Temp_High_Speed"] = twoTempData.highSpeed
+  data["Two_Temp_High_Temp"] = twoTempData.highTemp
+  #json_data = json.dumps(data)
+
+  r = requests.post(url + '/PostTwoTemp', data)
   print r.text
