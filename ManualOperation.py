@@ -2,7 +2,7 @@ import FanClass
 import PWM
 
 def AdjustPWM(FanData, CurrentSettings):
-  if FanData.direction == "Clockwise" or FanData.direction == "Counterclockwise":
+  if FanData.direction.lower() == "clockwise" or FanData.direction.lower() == "counterclockwise":
     if CurrentSettings.direction == FanData.direction:
       if CurrentSettings.pwm < FanData.pwm:
         CurrentSettings.pwm = CurrentSettings.pwm + 1

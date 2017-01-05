@@ -3,21 +3,33 @@ import ReadSensor
 import PWM
 
 def AdjustPWM(FanData, CurrentSettings):
-  temp = ReadSensor.ReadTemp()
+  #temp = ReadSensor.readTemp()
+  temp = ReadSensor.readPotent() # Using a potentiometer for testing
 
-  slope = (FanData.highSpeed - FanData.lowSpeed)/(FanData.highTemp - FanData.lowTemp)
-  intercept = (FanData.lowSpeed*FanData.highTemp - FanData.lowTemp*FanData.highSpeed)/(FanData.highTemp - FanData.lowTemp)
+  slope = float(FanData.highSpeed - FanData.lowSpeed)/float(FanData.highTemp - FanData.lowTemp)
+  intercept = float(float(FanData.lowSpeed*FanData.highTemp) - float(FanData.lowTemp*FanData.highSpeed))/float(FanData.highTemp - FanData.lowTemp)
 
-  desiredPWM = slope * temp + intercept
+  desiredPWM = round(slope * temp + intercept,0)
   
-  if FanData.direction == "Clockwise" or FanData.direction == "Counterclockwise":
+  if desiredPWM < 0:
+    desiredPWM = 0
+
+  if temp < FanData.lowTemp:
+    desiredPWM = 0
+  elif temp >= FanData.highTemp:
+    desiredPWM = FanData.highSpeed
+
+  print "PWM: " + str(desiredPWM)
+  print "temp: " + str(temp)
+
+  if FanData.direction.lower() == "clockwise" or FanData.direction.lower() == "counterclockwise":
     if CurrentSettings.direction == FanData.direction:
-      if CurrentSettings.pwm < FanData.pwm:
+      if CurrentSettings.pwm < desiredPWM:
         CurrentSettings.pwm = CurrentSettings.pwm + 1
         PWM.setpwm(CurrentSettings.pwm)
         print "Setting PWM to " + str(CurrentSettings.pwm) + " " + CurrentSettings.direction
 
-      elif CurrentSettings.pwm > FanData.pwm:
+      elif CurrentSettings.pwm > desiredPWM:
         CurrentSettings.pwm = CurrentSettings.pwm - 1
         PWM.setpwm(CurrentSettings.pwm)
         print "Setting PWM to " + str(CurrentSettings.pwm) + " " + CurrentSettings.direction   

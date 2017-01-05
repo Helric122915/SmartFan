@@ -6,8 +6,8 @@ def setuppwm():
 def configurepwm():
     wiringpi.pwmSetMode(wiringpi.PWM_MODE_MS)
     wiringpi.pwmSetClock(10)
-    wiringpi.pwmSetRange(48)
-  
+    wiringpi.pwmSetRange(48)  
+
 def setpwm(pwm):
     OUTPUT = 2
     TURN_OFF = 0

@@ -13,6 +13,13 @@ def GetOp():
 
   return opMode
 
+def PostOp(OpData):
+  data = {}
+  data["data"] = OpData
+
+  r = requests.post(url + '/PostOp', data)
+  print r.text
+
 def GetManual():
   r = requests.get(url + '/GetManual')
 
@@ -25,8 +32,7 @@ def PostManual(manualData):
   data = {}
   data["Manual_Direction"] = manualData.direction
   data["Manual_Fan_Speed"] = manualData.pwm
-  #json_data = json.dumps(data)
-
+  
   r = requests.post(url + '/PostManual', data)
   print r.text
 
@@ -45,8 +51,7 @@ def PostOneTemp(oneTempData):
   data["One_Temp_Low_Temp"] = oneTempData.lowTemp
   data["One_Temp_High_Speed"] = oneTempData.highSpeed
   data["One_Temp_High_Temp"] = oneTempData.highTemp
-  #json_data = json.dumps(data)
-
+  
   r = requests.post(url + '/PostOneTemp', data)
   print r.text
 
@@ -64,7 +69,6 @@ def PostTwoTemp(twoTempData):
   data["Two_Temp_Low_Temp"] = twoTempData.lowTemp
   data["Two_Temp_High_Speed"] = twoTempData.highSpeed
   data["Two_Temp_High_Temp"] = twoTempData.highTemp
-  #json_data = json.dumps(data)
 
   r = requests.post(url + '/PostTwoTemp', data)
   print r.text
