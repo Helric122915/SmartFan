@@ -4,6 +4,7 @@ import time
 import RPi.GPIO as GPIO
 import PWM
 import FanClass
+import LCDcontrol as lcd
 import AccessWebServer
 import ManualOperation
 #import ScheduleOperation
@@ -15,6 +16,8 @@ GPIO.setwarnings(False)
 GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP) # POWER PUSH BUTTON GPIO PIN 5
 GPIO.setup(6, GPIO.OUT)
 GPIO.setup(6, GPIO.LOW) # LED INDICATOR GPIO PIN 6
+
+lcd.setBacklight(0)
 
 currentSettings = FanClass.CurrentFanData("Clockwise",-1,True)
 
@@ -63,5 +66,9 @@ while True:
   else:
     print "Not in Manual or OneTemp"
     PWM.setpwm(-1)
-
+  
+  if currentSettings.direction.lower() == "clockwise":
+    lcd.writeClear('PWM ' + str(currentSettings.pwm) + ' Clockwise')
+  elif currentSettings.direction.lower() == "counterclockwise":
+    lcd.writeClear('PWM ' + str(currentSettings.pwm) + '\nCounterclockwise')
   time.sleep(1)
