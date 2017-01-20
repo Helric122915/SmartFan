@@ -37,7 +37,7 @@ def adjustpwm(FanData, CurrentSettings):
   # The value that the PWM value can safetly be adjusted by.
   AdjustValue = 1
 
-  if FanData.direction.lower() == "clockwise" or FanData.direction.lower() == "counterclockwise"
+  if FanData.direction.lower() == "clockwise" or FanData.direction.lower() == "counterclockwise":
     if CurrentSettings.direction == FanData.direction:
       if CurrentSettings.pwm < FanData.pwm:
         CurrentSettings.pwm = CurrentSettings.pwm + AdjustValue
