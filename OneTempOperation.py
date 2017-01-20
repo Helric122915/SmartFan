@@ -22,7 +22,9 @@ def AdjustPWM(FanData, CurrentSettings):
   print "PWM: " + str(desiredPWM)
   print "temp: " + str(temp)
 
-  CurrentSettings = PWM.adjustpwm(FanData, CurrentSettings):
+  FanData.pwm = desiredPWM
+
+  CurrentSettings = PWM.adjustpwm(FanData, CurrentSettings)
   #if FanData.direction.lower() == "clockwise" or FanData.direction.lower() == "counterclockwise":
   #  if CurrentSettings.direction == FanData.direction:
   #    if CurrentSettings.pwm < desiredPWM:

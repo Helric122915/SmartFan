@@ -6,7 +6,8 @@ class ManualData(object):
 
 class OneTempData(object):
 
-  def __init__(self,direction,lowSpeed,lowTemp,highSpeed,highTemp):
+  def __init__(self,direction,lowSpeed,lowTemp,highSpeed,highTemp,pwm=-1):
+    self.pwm = pwm
     self.direction = direction
     self.lowSpeed = lowSpeed
     self.lowTemp = lowTemp
