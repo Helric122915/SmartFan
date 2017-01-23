@@ -9,7 +9,7 @@ def GetOp():
   r = requests.get(url + '/GetOp')
 
   data = json.loads(r.text)
-  opMode = data['data']
+  opMode = data['data']['Mode']
 
   return opMode
 
