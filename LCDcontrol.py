@@ -1,5 +1,6 @@
 import Adafruit_CharLCD as LCD
 import time
+import Internet
 
 lcd_rs = 27
 lcd_en = 22
@@ -19,7 +20,6 @@ def writeMessage(message):
 
 def writeClear(message):
   lcd.clear()
-  #time.sleep(3)
   lcd.message(message)
 
 def createChar(position,char):
@@ -40,3 +40,11 @@ def enableDisplay(enable):
 
 def delayMicro(microseconds):
   lcd._delay_microseconds(microseconds)
+
+def StartUp():
+  clear()
+  setBacklight(0)
+  writeMessage(Internet.getNow()+'\n')
+  writeMessage('IP %s' % (Internet.getIP()))
+  time.sleep(4)
+  clear()
