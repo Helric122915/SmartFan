@@ -44,7 +44,7 @@ def readPotent():
 
   try:
     value = adc.read_adc(0, gain=GAIN)
-    potent = value * (100.0/2048.0)
+    potent = value * (30.0/2048.0) + 60
     return potent
   except:
     print "Could not read ADC"
