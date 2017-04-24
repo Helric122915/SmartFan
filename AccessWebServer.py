@@ -2,32 +2,63 @@ import requests
 import json
 import FanClass
 import time
+import Internet
 
 PORTNUM = '3000'
-url = 'http://130.101.95.132:' + PORTNUM
+url = 'http://' + Internet.getIP().rstrip() + ':' + PORTNUM
 
+def PostTemp(temp):
+  data = {}
+  data["Temp"] = temp
+
+  try:
+    r = requests.post(url + '/PostTemp', data)
+    #print r.text
+  except:
+    print "Couldn't Access WebServer"
+    
 def GetOp():
   try:
     r = requests.get(url + '/GetOp')
 
     if r.status_code != 200:
-      print "Error:", r_status_code
-      return "NoMode"
+      #print "Error:", r_status_code
+      return FanClass.FanStatus("NoMode","false",0)
     else:
       data = json.loads(r.text)
-      opMode = data['data']['Mode']
+      power = False
+      if data['data']['Power'].lower() == "true":
+        power = True        
+      elif data['data']['Power'].lower() == "false":
+        power = False
 
-      return opMode
+      fanStatus = FanClass.FanStatus(data['data']['Mode'],power,int(data['data']['RPM']))
+
+      return fanStatus
   
   except:
-    return "NoMode";
+    return FanClass.FanStatus("NoMode","false",0)
 
-def PostOp(OpData):
+def PostOp(OpData, RPM):
   data = {}
   data["Mode"] = OpData
+  data["RPM"] = RPM
 
-  r = requests.post(url + '/PostOp', data)
-  print r.text
+  try:
+    r = requests.post(url + '/PostOpRPi', data)
+    #print r.text
+  except:
+    print "Couldn't Access WebServer"
+    
+def PostPower(power):
+  data = {}
+  data["Power"] = power
+
+  try:
+    r = requests.post(url + '/PostPower', data)
+    #print r.text
+  except:
+    print "Couldn't Access WebServer"
 
 def GetAddress():
   try:
@@ -44,14 +75,38 @@ def GetAddress():
 
   except:
     return FanClass.LocationData(0,0)
+
+def GetMessage():
+  try:
+    r = requests.get(url + '/GetMessage')
+
+    if r.status_code != 200:
+      print "Error:", r.status_code
+      return ""
+    else:
+      data = json.loads(r.text)
+
+      return data['data']['Message']
+
+  except:
+    return ""
     
+def PostMessage(message):
+  data = {}
+  data["Message"] = message
+
+  try:
+    r = requests.post(url + '/PostMessage', data)
+    #print r.text
+  except:
+    print "Couldn't Access WebServer"
 
 def GetManual():
   try:
     r = requests.get(url + '/GetManual')
 
     if r.status_code != 200:
-      print "Error:", r.status_code
+      #print "Error:", r.status_code
       return FanClass.ManualData('N/A',-1)
     else:
       data = json.loads(r.text)
@@ -66,10 +121,13 @@ def PostManual(manualData):
   data = {}
   data["Manual_Direction"] = manualData.direction
   data["Manual_Fan_Speed"] = manualData.pwm
-  
-  r = requests.post(url + '/PostManual', data)
-  print r.text
 
+  try:
+    r = requests.post(url + '/PostManual', data)
+    #print r.text
+  except:
+    print "Couldn't Access WebServer"
+    
 def GetCurrentSchedule():
   try:
     r = requests.get(url + '/GetCurrentSchedule')
@@ -109,10 +167,13 @@ def PostOneTemp(oneTempData):
   data["One_Temp_Low_Temp"] = oneTempData.lowTemp
   data["One_Temp_High_Speed"] = oneTempData.highSpeed
   data["One_Temp_High_Temp"] = oneTempData.highTemp
-  
-  r = requests.post(url + '/PostOneTemp', data)
-  print r.text
 
+  try:
+    r = requests.post(url + '/PostOneTemp', data)
+    #print r.text
+  except:
+    print "Couldn't Access WebServer"
+    
 def GetTwoTemp():
   try:
     r = requests.get(url + '/GetTwoTemp')
@@ -136,5 +197,8 @@ def PostTwoTemp(twoTempData):
   data["Two_Temp_High_Speed"] = twoTempData.highSpeed
   data["Two_Temp_High_Temp"] = twoTempData.highTemp
 
-  r = requests.post(url + '/PostTwoTemp', data)
-  print r.text
+  try:
+    r = requests.post(url + '/PostTwoTemp', data)
+    #print r.text
+  except:
+    print "Couldn't Access WebServer"

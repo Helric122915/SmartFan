@@ -1,29 +1,45 @@
 import Adafruit_ADS1x15 # Google search ADS1015/ADS1115 and follow adafruit tutorial
+import time
+import FanClass
+import AccessWebServer
 
 try:
   adc = Adafruit_ADS1x15.ADS1015()
 except:
   print "Could not initalize the ADC"
 
+tempData = FanClass.WeatherData(0.0, time.time())
+
 def readTemp():
-  GAIN = 1
-  tempCoef = 19.5    
-  voltAtZero = 400
+  GAIN = 4
+  #tempCoef = 19.5    
+  tempCoef = .01
+  #voltAtZero = 400
+  voltAtZero = .5
+  global tempData
 
-  try:
-    value = adc.read_adc(0, gain=GAIN)
+  if tempData.ElapsedTime() > 10 or tempData.data == 0.0:
+    try:
+      value = adc.read_adc(0, gain=GAIN)
+      value = value * (1.024 / 2048.0)
 
-    # Apply corrective function to attain temp value
-    temp = (value - voltAtZero) / tempCoef
+      # Apply corrective function to attain temp value
+      temp = (value - voltAtZero) / tempCoef
 
-    # Convert from Celsius to Fahrenheit
-    temp = (temp*(9.0/5.0)) + 32
+      # Convert from Celsius to Fahrenheit
+      temp = (temp*(9.0/5.0)) + 32
 
-    return temp
+      AccessWebServer.PostTemp(temp)
 
-  except:
-    print "Could not read ADC"
-    return -3000
+      tempData = FanClass.WeatherData(temp, time.time())
+
+      return tempData.data
+
+    except:
+      print "Could not read ADC"
+      return -3000
+  else:
+    return tempData.data
     
 def readHumidity():
   GAIN = 1    

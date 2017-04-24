@@ -44,36 +44,9 @@ def WeatherData():
   if weatherData.ElapsedTime() > 300:
     weatherData = FanClass.WeatherData(Current(), time.time())
   
-  return weatherData.json
+  return weatherData.data
 
 def CurrentTemp():
   json_weather = WeatherData()
 
-  # Temporarily adding 55.0 to make the temperature more appropriate.
-  return float(json_weather['currently']['temperature']) + 55.0
-
-#print json_weather
-#print "\n"
-
-#currentTime = json_weather['currently']['time']
-
-#currentTime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(currentTime))
-
-#print currentTime
-
-#currentTemp = json_weather['currently']['temperature']
-
-#print "The Current Temperature is: "  + str(currentTemp) + " Fahrenheit"
-
-#currentWeather = json_weather['currently']['icon']
-
-#if "cloud" in currentWeather:
-#	print "Currently it is: Cloudy"
-#elif "rain" in currentWeather:
-#	print "Currently it is: Raining"
-#else:
-#	print "Currently it is: Clear"
-
-#nearestStorm = json_weather['currently']['nearestStormDistance']
-
-#print "The nearest Storm is " + str(nearestStorm) + " Kilometer(s) away."
+  return float(json_weather['currently']['temperature']) + 20

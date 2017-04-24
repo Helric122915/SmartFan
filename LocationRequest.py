@@ -19,7 +19,7 @@ def LatLng(address):
   if r.status_code != 200:
     print "Error:", r.status_code
   else: 
-    print r
+    #print r
     json_weather = r.json()
     lat =  json_weather['results'][0]['geometry']['bounds']['northeast']['lat']
     lng = json_weather['results'][0]['geometry']['bounds']['northeast']['lng']

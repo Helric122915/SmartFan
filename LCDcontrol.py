@@ -45,6 +45,7 @@ def StartUp():
   clear()
   setBacklight(0)
   writeMessage(Internet.getNow()+'\n')
-  writeMessage('IP %s' % (Internet.getIP()))
+  #writeMessage('IP %s' % (Internet.getIP())) # current IP address too long to display with IP before it
+  writeMessage(Internet.getIP())
   time.sleep(4)
-  clear()
+  #writeClear('Power On')
