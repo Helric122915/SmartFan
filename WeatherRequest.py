@@ -49,4 +49,4 @@ def WeatherData():
 def CurrentTemp():
   json_weather = WeatherData()
 
-  return float(json_weather['currently']['temperature']) + 20
+  return float(json_weather['currently']['temperature'])
