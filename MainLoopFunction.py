@@ -14,7 +14,7 @@ import Internet
 import ReadSensor
 
 # Sleeps the process on Startup to let the WebServer start.
-time.sleep(4)
+time.sleep(3)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -30,7 +30,7 @@ AccessWebServer.PostPower("false") # Set WebServer Power Status to Default Off
 GPIO.output(6, GPIO.LOW) # Set Power LED to Default Off
 
 AccessWebServer.PostMessage(Internet.getNow()+ '\n' + Internet.getIP())
-#time.sleep(2)
+time.sleep(2)
 
 currentSettings = FanClass.CurrentFanData("Clockwise",-1)
 stringTemp = "0"
