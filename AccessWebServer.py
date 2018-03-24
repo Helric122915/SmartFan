@@ -16,7 +16,7 @@ def PostTemp(temp):
     #print r.text
   except:
     print "Couldn't Access WebServer"
-    
+
 def GetOp():
   try:
     r = requests.get(url + '/GetOp')
@@ -28,14 +28,14 @@ def GetOp():
       data = json.loads(r.text)
       power = False
       if data['data']['Power'].lower() == "true":
-        power = True        
+        power = True
       elif data['data']['Power'].lower() == "false":
         power = False
 
       fanStatus = FanClass.FanStatus(data['data']['Mode'],power,int(data['data']['RPM']))
 
       return fanStatus
-  
+
   except:
     return FanClass.FanStatus("NoMode","false",0)
 
@@ -49,7 +49,6 @@ def PostOp(OpData, RPM):
     #print r.text
   except:
     print "Couldn't Access WebServer"
-    
 def PostPower(power):
   data = {}
   data["Power"] = power
@@ -90,7 +89,7 @@ def GetMessage():
 
   except:
     return ""
-    
+
 def PostMessage(message):
   data = {}
   data["Message"] = message
@@ -127,7 +126,7 @@ def PostManual(manualData):
     #print r.text
   except:
     print "Couldn't Access WebServer"
-    
+
 def GetCurrentSchedule():
   try:
     r = requests.get(url + '/GetCurrentSchedule')
@@ -138,10 +137,10 @@ def GetCurrentSchedule():
     else:
       data = json.loads(r.text)
       scheduleData = FanClass.ScheduleData(data['data']['Direction'],data['data']['Fan_Speed'])
-    
+
       return scheduleData
-  
-  except:  
+
+  except:
     return FanClass.ScheduleData('N/A',-1)
 
 def GetOneTemp():
@@ -154,7 +153,7 @@ def GetOneTemp():
     else:
       data = json.loads(r.text)
       oneTempData = FanClass.OneTempData(data['data']['One_Temp_Direction'],int(data['data']['One_Temp_Low_Speed']),int(data['data']['One_Temp_Low_Temp']),int(data['data']['One_Temp_High_Speed']),int(data['data']['One_Temp_High_Temp']))
-  
+
       return oneTempData
 
   except:
@@ -173,7 +172,7 @@ def PostOneTemp(oneTempData):
     #print r.text
   except:
     print "Couldn't Access WebServer"
-    
+
 def GetTwoTemp():
   try:
     r = requests.get(url + '/GetTwoTemp')

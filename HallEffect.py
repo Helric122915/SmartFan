@@ -22,9 +22,9 @@ def hallback(channel):
   if postTime - time.time() > 60:
     AccessWebServer.PostOp("Manual", rpm)
     postTime = time.time()
-    
+
   previousTime = time.time()
-  
+
 GPIO.add_event_detect(11, GPIO.RISING, callback=hallback, bouncetime=55)
 
 PWM.setpwm(22)
